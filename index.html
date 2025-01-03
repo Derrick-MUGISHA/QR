@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QR Code Generator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="container">
+    <h1>QR Code Generator</h1>
+    <p>Enter the text or URL you want to convert to a QR code:</p>
+    <input type="text" id="inputText" placeholder="Enter text or URL">
+    <div id="qrCode">
+      <img id="QRCode" src="" alt="Your QR Code will appear here">
+    </div>
+    <button onclick="generateQRCode()">Generate QR Code</button>
+  </div>
+
+  <script>
+    function generateQRCode() {
+  const inputText = document.getElementById("inputText");
+  const qrCodeDiv = document.getElementById("qrCode");
+  const qrCodeImg = document.getElementById("QRCode");
+
+  if (inputText.value.trim()) {
+    // Valid input: Generate QR Code
+    qrCodeImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(inputText.value)}`;
+    qrCodeDiv.classList.add("show");
+    inputText.classList.remove("error"); // Remove error class if present
+  } else {
+    // Invalid input: Display error animation
+    qrCodeDiv.classList.remove("show");
+    inputText.classList.add("error");
+
+    // Remove the error class after the animation ends
+    setTimeout(() => inputText.classList.remove("error"), 1000);
+
+    alert("Please enter some text or a URL to generate a QR code.");
+  }
+}
+
+  </script>
+</body>
+
+</html>
